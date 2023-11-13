@@ -34,12 +34,23 @@ public class PetDb {
             System.out.println("1. View all pets");
             System.out.println("2. Add more pets");
             System.out.println("3. Update an existing pet");
-            System.out.println("6. Remove an existing pet");
-            System.out.println("4. Search pets by name");
-            System.out.println("5. Search pets by age");
+            System.out.println("4. Remove an existing pet");
+            System.out.println("5. Search pets by name");
+            System.out.println("6. Search pets by age");
             System.out.println("7. Exit Program");
             System.out.print("Enter your choice: ");
             int option = scan.nextInt();
+            switch(option) {
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                default:
+                    System.out.println("Invalid choice. Please enter a number 1-7");
+            }
         }
     }
 }
