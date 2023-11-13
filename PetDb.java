@@ -88,6 +88,18 @@ public class PetDb {
         }
     }
 
+    // remove pet
+    public static void removePet(int id) {
+        // if the passed id is valid gets pet, removes pet and prints the removed info
+        if (id >= 0 && id < petList.size()) {
+            Pet pet = petList.get(id);
+            System.out.println(id + " " + pet.getName() + " " + pet.getAge() + " has been removed.");
+            petList.remove(id);
+        } else {
+            System.out.println("Invalid pet ID");
+        }
+    }
+
     // MAIN
     public static void main(String[] args) {
         PetDb petDb = new PetDb();
@@ -151,8 +163,16 @@ public class PetDb {
                     // pass name and age to pet updater
                     petDb.updatePet(petId, name, age);
                     break;
+                // remove pet
                 case 4:
-                    System.out.println("option 4");
+                    // first prints pet db
+                    petDb.viewPets();
+                    // gets the desired id to remove
+                    System.out.println("Enter the pet ID to remove: ");
+                    int id = scan.nextInt();
+                    scan.nextLine();
+                    // passes id to removepet method
+                    removePet(id);
                     break;
                 // name search
                 case 5:
