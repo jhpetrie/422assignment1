@@ -38,11 +38,11 @@ public class PetDb {
             System.out.println("5. Search pets by name");
             System.out.println("6. Search pets by age");
             System.out.println("7. Exit Program");
-            System.out.print("Enter your choice: ");
+            System.out.print("Your choice: ");
             int option = scan.nextInt();
             switch (option) {
                 case 1:
-                    System.out.println("option 1");
+                    System.out.println("Your 1");
                     break;
                 case 2:
                     System.out.println("option 2");
@@ -60,7 +60,9 @@ public class PetDb {
                     System.out.println("option 6");
                     break;
                 case 7:
-                    System.out.println("option 7");
+                    System.out.println("Goodbye!");
+                    scan.close();
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Invalid choice. Please enter a number 1-7");
