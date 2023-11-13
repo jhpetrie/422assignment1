@@ -73,6 +73,21 @@ public class PetDb {
         System.out.println(rows + " rows in set.");
     }
 
+    // Update Pet
+    public void updatePet(int id, String newName, int newAge) {
+        // checks to ensure input ID to edit is valid (more than 0 less than max)
+        if (id >= 0 && id < petList.size()) {
+            // gets the pet at that index (id)
+            Pet pet = petList.get(id);
+            // prints required message and sets name and age based on passed parameters
+            System.out.println(pet.getName() + " " + pet.getAge() + " changed to " + newName + " " + newAge);
+            pet.setName(newName);
+            pet.setAge(newAge);
+        } else {
+            System.out.println("Invalid pet ID");
+        }
+    }
+
     // MAIN
     public static void main(String[] args) {
         PetDb petDb = new PetDb();
@@ -118,8 +133,23 @@ public class PetDb {
                             petDb.addPet(name, age);
                         }
                     }
+                    break;
+                // update pet
                 case 3:
-                    System.out.println("option 3");
+                    // first prints the petdb
+                    petDb.viewPets();
+                    // asks for id to update
+                    System.out.print("Enter the pet ID to update: ");
+                    int petId = scan.nextInt();
+                    scan.nextLine();
+                    // asks for new name and age
+                    System.out.print("\nEnter new name and new age: ");
+                    String[] input = scan.nextLine().split(" ");
+                    // reuses pet adding logic to update pet
+                    String name = input[0];
+                    int age = Integer.parseInt(input[1]);
+                    // pass name and age to pet updater
+                    petDb.updatePet(petId, name, age);
                     break;
                 case 4:
                     System.out.println("option 4");
