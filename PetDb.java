@@ -10,7 +10,6 @@ public class PetDb {
 
     public void addPet(String name, int age) {
         petList.add(new Pet(name, age));
-        System.out.println("pet added successfully");
     }
 
     public void showPets() {
@@ -40,13 +39,25 @@ public class PetDb {
             System.out.println("7. Exit Program");
             System.out.print("Your choice: ");
             int option = scan.nextInt();
+            scan.nextLine();
             switch (option) {
                 case 1:
                     System.out.println("Your 1");
                     break;
                 case 2:
-                    System.out.println("option 2");
-                    break;
+                    System.out.println("Input pet name as 'done' at any time to stop");
+                    while (true) {
+                        System.out.print("Add pet (name age): ");
+                        String[] input = scan.nextLine().split(" ");
+                        if (input[0].equals("done")) {
+                            System.out.println("Pets added.");
+                            break;
+                        } else {
+                            String name = input[0];
+                            int age = Integer.parseInt(input[1]);
+                            petDb.addPet(name, age);
+                        }
+                    }
                 case 3:
                     System.out.println("option 3");
                     break;
