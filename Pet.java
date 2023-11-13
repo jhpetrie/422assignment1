@@ -2,12 +2,14 @@
 public class Pet {
     private String name;
     private int age;
-//constructor
+
+    // constructor
     public Pet(String name, int age) {
         this.name = name;
         this.age = age;
     }
-//getters and setters
+
+    // getters and setters
     public String getName() {
         return name;
     }

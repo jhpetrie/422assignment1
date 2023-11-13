@@ -124,20 +124,20 @@ public class PetDb {
                 case 4:
                     System.out.println("option 4");
                     break;
-                    // name search
+                // name search
                 case 5:
                     System.out.print("Enter a name to search: ");
                     String searchName = scan.nextLine();
                     searchName(searchName);
                     break;
-                    // age search
+                // age search
                 case 6:
                     System.out.print("Enter age to search: ");
                     int searchAge = scan.nextInt();
                     scan.nextLine();
                     searchAge(searchAge);
                     break;
-                    // exit the program
+                // exit the program
                 case 7:
                     System.out.println("Goodbye!");
                     scan.close();
