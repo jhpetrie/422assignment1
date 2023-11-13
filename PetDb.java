@@ -12,13 +12,13 @@ public class PetDb {
         petList.add(new Pet(name, age));
     }
 
-    public void showPets() {
+    public void viewPets() {
         System.out.println("+----------------------+");
-        System.out.printf("| %-3s | %-10s | %-4s |\n", "ID", "NAME", "AGE");
+        System.out.printf("| %-2s | %-9s | %-3s |\n", "ID", "NAME", "AGE");
         System.out.println("+----------------------+");
         for (int i = 0; i < petList.size(); i++) {
             Pet pet = petList.get(i);
-            System.out.printf("| %-3d | %-10s | %-4d |\n", i, pet.getName(), pet.getAge());
+            System.out.printf("| %-2d | %-9s | %-3d |\n", i, pet.getName(), pet.getAge());
         }
         System.out.println("+----------------------+");
         System.out.println(petList.size() + " rows in set.");
@@ -42,7 +42,7 @@ public class PetDb {
             scan.nextLine();
             switch (option) {
                 case 1:
-                    System.out.println("Your 1");
+                    petDb.viewPets();
                     break;
                 case 2:
                     System.out.println("Input pet name as 'done' at any time to stop");
