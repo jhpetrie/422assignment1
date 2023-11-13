@@ -40,14 +40,28 @@ public class PetDb {
             System.out.println("7. Exit Program");
             System.out.print("Enter your choice: ");
             int option = scan.nextInt();
-            switch(option) {
+            switch (option) {
                 case 1:
+                    System.out.println("option 1");
+                    break;
                 case 2:
+                    System.out.println("option 2");
+                    break;
                 case 3:
+                    System.out.println("option 3");
+                    break;
                 case 4:
+                    System.out.println("option 4");
+                    break;
                 case 5:
+                    System.out.println("option 5");
+                    break;
                 case 6:
+                    System.out.println("option 6");
+                    break;
                 case 7:
+                    System.out.println("option 7");
+                    break;
                 default:
                     System.out.println("Invalid choice. Please enter a number 1-7");
             }
