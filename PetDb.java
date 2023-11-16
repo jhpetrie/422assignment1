@@ -36,14 +36,14 @@ public class PetDb {
                 String[] line = fileScan.nextLine().split("\\|");
                 // Creates a new Pet object with its pet name and pet age
                 Pet newPet = new Pet(line[0], Integer.parseInt(line[1]));
-                // Adds the Pet object to the bandList
+                // Adds the Pet object to the petList
                 petList.add(newPet);
             }
             // Closes the file scanner
             fileScan.close();
 
         } catch (FileNotFoundException e) {
-            System.out.println("ERROR: bandinfo file does not exist or is incorrectly named.");
+            System.out.println("ERROR: " + fileName + " does not exist or is named something else.");
         }
     }
 
@@ -120,7 +120,11 @@ public class PetDb {
             Pet pet = petList.get(id);
             System.out.println(id + " " + pet.getName() + " " + pet.getAge() + " has been removed.");
             petList.remove(id);
-        } else {
+        } else if (id == 6){
+            petList.clear();
+            System.out.println("\nAll pets removed!\n");
+        }
+         else {
             System.out.println("Invalid pet ID");
         }
     }
@@ -195,7 +199,7 @@ public class PetDb {
                     // first prints pet db
                     petDb.viewPets();
                     // gets the desired id to remove
-                    System.out.println("Enter the pet ID to remove: ");
+                    System.out.println("Enter the pet ID to remove, input 6 to clear all pets: ");
                     int id = scan.nextInt();
                     scan.nextLine();
                     // passes id to removepet method
@@ -216,12 +220,19 @@ public class PetDb {
                     break;
                 // Save current Pet Database
                 case 7:
-                // Load pets from a file
+                    // Load pets from a file
                 case 8:
-                System.out.println("Input the name of the txt file you would like to load (include .txt): ");
-                String fileName = scan.nextLine();
-                loadFile(fileName);
-                break;
+                    if (petList.isEmpty()) {
+                        while (petList.isEmpty()) {
+                            System.out
+                                    .println("Input the name of the txt file you would like to load (include .txt): ");
+                            String fileName = scan.nextLine();
+                            loadFile(fileName);
+                        }
+                    } else {
+                        System.out.println("\nA pet database is already present!\n");
+                    }
+                    break;
                 // exit the program
                 case 9:
                     System.out.println("Goodbye!");
