@@ -15,12 +15,17 @@ public class PetDb {
         petList.add(new Pet(name, age));
     }
 
-    // method to view pets
-    public void viewPets() {
-        // prints the pet database
+    public static void printHeader() {
+        // prints table header
         System.out.println("+----------------------+");
         System.out.printf("| %-2s | %-9s | %-3s |\n", "ID", "NAME", "AGE");
         System.out.println("+----------------------+");
+    }
+
+    // method to view pets
+    public void viewPets() {
+        // prints the pet database
+        printHeader();
         // loops over the arraylist getting the pet objects and printing their name and
         // age
         for (int i = 0; i < petList.size(); i++) {
@@ -34,10 +39,7 @@ public class PetDb {
 
     // method for searching by a name
     public static void searchName(String searchName) {
-        // prints table header
-        System.out.println("+----------------------+");
-        System.out.printf("| %-2s | %-9s | %-3s |\n", "ID", "NAME", "AGE");
-        System.out.println("+----------------------+");
+        printHeader();
         // initialize a variable for countin rows
         int rows = 0;
         // loops over array list checking to see if the paramater that has been passed
@@ -58,9 +60,7 @@ public class PetDb {
 
     // method for searching by age, same as by name but with an int parameter
     public static void searchAge(int searchAge) {
-        System.out.println("+----------------------+");
-        System.out.printf("| %-2s | %-9s | %-3s |\n", "ID", "NAME", "AGE");
-        System.out.println("+----------------------+");
+        printHeader();
         int rows = 0;
         for (int i = 0; i < petList.size(); i++) {
             Pet pet = petList.get(i);
