@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 //pet database class of type arraylist
 public class PetDb {
@@ -20,6 +22,29 @@ public class PetDb {
         System.out.println("+----------------------+");
         System.out.printf("| %-2s | %-9s | %-3s |\n", "ID", "NAME", "AGE");
         System.out.println("+----------------------+");
+    }
+
+    public static void loadFile(String fileName) {
+        try {
+            // Create a File object for the text file
+            File file = new File(fileName);
+            // Create a Scanner object for the file
+            Scanner fileScan = new Scanner(file);
+            // Read each line in the file
+            while (fileScan.hasNextLine()) {
+                // Splits the line into pet name and pet age using the "|" delimiter
+                String[] line = fileScan.nextLine().split("\\|");
+                // Creates a new Pet object with its pet name and pet age
+                Pet newPet = new Pet(line[0], Integer.parseInt(line[1]));
+                // Adds the Pet object to the bandList
+                petList.add(newPet);
+            }
+            // Closes the file scanner
+            fileScan.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("ERROR: bandinfo file does not exist or is incorrectly named.");
+        }
     }
 
     // method to view pets
@@ -114,7 +139,9 @@ public class PetDb {
             System.out.println("4. Remove an existing pet");
             System.out.println("5. Search pets by name");
             System.out.println("6. Search pets by age");
-            System.out.println("7. Exit Program");
+            System.out.println("7. Save current Pet Database to a File");
+            System.out.println("8. Load pets from a File");
+            System.out.println("9. Exit Program");
             System.out.print("Your choice: ");
             int option = scan.nextInt();
             scan.nextLine();
@@ -187,8 +214,16 @@ public class PetDb {
                     scan.nextLine();
                     searchAge(searchAge);
                     break;
-                // exit the program
+                // Save current Pet Database
                 case 7:
+                // Load pets from a file
+                case 8:
+                System.out.println("Input the name of the txt file you would like to load (include .txt): ");
+                String fileName = scan.nextLine();
+                loadFile(fileName);
+                break;
+                // exit the program
+                case 9:
                     System.out.println("Goodbye!");
                     scan.close();
                     System.exit(0);
