@@ -1,0 +1,3 @@
+Bo|3
+Princess|12
+Fido|5

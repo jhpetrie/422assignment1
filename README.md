@@ -1,4 +1,4 @@
 # 422assignment1
-csc 422 assignment 1
+csc 422 Pet DB
 
-This is my repo for assignment 1 - John Petrie
+This is my repo for the pet database - John Petrie
