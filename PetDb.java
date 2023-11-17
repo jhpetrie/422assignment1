@@ -28,12 +28,16 @@ public class PetDb {
                 System.out.println("Pets added.");
                 break;
             } else {
+                try {
                 // takes the string at index 0 as the name
                 String name = input[0];
                 // takes the string at index 1 and parses to an int
                 int age = Integer.parseInt(input[1]);
                 // pass name and age to pet constructor
                 petList.add(new Pet(name, age));
+                } catch (Exception e) {
+                    System.out.println("ERROR: Invalid input");
+                }
             }
         }
     }
