@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -29,12 +30,12 @@ public class PetDb {
                 break;
             } else {
                 try {
-                // takes the string at index 0 as the name
-                String name = input[0];
-                // takes the string at index 1 and parses to an int
-                int age = Integer.parseInt(input[1]);
-                // pass name and age to pet constructor
-                petList.add(new Pet(name, age));
+                    // takes the string at index 0 as the name
+                    String name = input[0];
+                    // takes the string at index 1 and parses to an int
+                    int age = Integer.parseInt(input[1]);
+                    // pass name and age to pet constructor
+                    petList.add(new Pet(name, age));
                 } catch (Exception e) {
                     System.out.println("ERROR: Invalid input");
                 }
@@ -178,19 +179,27 @@ public class PetDb {
     }
 
     // Remove pet
-    public static void removePet(int id) {
-        // If the passed id is valid gets pet, removes pet and prints the removed info
-        if (id >= 0 && id < petList.size()) {
-            Pet pet = petList.get(id);
-            System.out.println(id + " " + pet.getName() + " " + pet.getAge() + " has been removed.");
-            petList.remove(id);
-        } else if (id == 6) {
-            petList.clear();
-            System.out.println("\nAll pets removed!\n");
-        } else {
-            System.out.println("Invalid pet ID");
+    public static void removePet() {
+        int id = 0;
+        System.out.println("Enter the pet ID to remove, input '6' to clear all pets: ");
+        try {
+            id = scan.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("ERROR: Invalid pet ID inpu. Must input an integer");
         }
-    }
+            scan.nextLine();
+            if (id >= 0 && id < petList.size()) {
+                Pet pet = petList.get(id);
+                System.out.println(id + " " + pet.getName() + " " + pet.getAge() + " has been removed.");
+                petList.remove(id);
+            } else if (id == 6) {
+                petList.clear();
+                System.out.println("\nAll pets removed!\n");
+            } else {
+                System.out.println("Invalid pet ID");
+            }
+        }
+    
 
     // MAIN
     public static void main(String[] args) {
@@ -231,12 +240,7 @@ public class PetDb {
                 case 4: // remove pet
                     // first prints pet db
                     petDb.viewPets();
-                    // gets the desired id to remove
-                    System.out.println("Enter the pet ID to remove, input 6 to clear all pets: ");
-                    int id = scan.nextInt();
-                    scan.nextLine();
-                    // passes id to removepet method
-                    removePet(id);
+                    removePet();
                     break;
                 case 5: // name search
                     System.out.print("Enter a name to search: ");
@@ -245,6 +249,7 @@ public class PetDb {
                     break;
                 case 6: // age search
                     System.out.print("Enter age to search: ");
+
                     int searchAge = scan.nextInt();
                     scan.nextLine();
                     searchAge(searchAge);
