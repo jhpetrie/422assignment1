@@ -147,17 +147,29 @@ public class PetDb {
     }
 
     // Update Pet
-    public void updatePet(int id, String newName, int newAge) {
-        // checks to ensure input ID to edit is valid (more than 0 less than max)
-        if (id >= 0 && id < petList.size()) {
-            // gets the pet at that index (id)
-            Pet pet = petList.get(id);
-            // prints required message and sets name and age based on passed parameters
-            System.out.println(pet.getName() + " " + pet.getAge() + " changed to " + newName + " " + newAge);
-            pet.setName(newName);
-            pet.setAge(newAge);
-        } else {
-            System.out.println("Invalid pet ID");
+    public void updatePet() {
+        while (true) {
+            System.out.print("Enter the pet ID to update: ");
+            int petId = scan.nextInt();
+            scan.nextLine();
+            // checks to ensure input ID to edit is valid (more than 0 less than max)
+            if (petId >= 0 && petId < petList.size()) {
+                // asks for new name and age
+                System.out.print("\nEnter new name and new age: ");
+                String[] input = scan.nextLine().split(" ");
+                // reuses pet adding logic to update pet
+                String newName = input[0];
+                int newAge = Integer.parseInt(input[1]);
+                // gets the pet at that index (id)
+                Pet pet = petList.get(petId);
+                // prints required message and sets name and age based on passed parameters
+                System.out.println(pet.getName() + " " + pet.getAge() + " changed to " + newName + " " + newAge);
+                pet.setName(newName);
+                pet.setAge(newAge);
+                break;
+            } else {
+                System.out.println("\nERROR: Invalid pet ID\n");
+            }
         }
     }
 
@@ -206,18 +218,11 @@ public class PetDb {
                 case 3: // update pet
                     // first prints the petdb
                     petDb.viewPets();
-                    // asks for id to update
-                    System.out.print("Enter the pet ID to update: ");
-                    int petId = scan.nextInt();
-                    scan.nextLine();
-                    // asks for new name and age
-                    System.out.print("\nEnter new name and new age: ");
-                    String[] input = scan.nextLine().split(" ");
-                    // reuses pet adding logic to update pet
-                    String name = input[0];
-                    int age = Integer.parseInt(input[1]);
-                    // pass name and age to pet updater
-                    petDb.updatePet(petId, name, age);
+                    if (petList.isEmpty()) {
+                        System.out.println("\nERROR: There are no existing pets in the database!\n");
+                    } else {
+                        petDb.updatePet();
+                    }
                     break;
                 case 4: // remove pet
                     // first prints pet db
