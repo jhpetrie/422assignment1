@@ -64,6 +64,7 @@ public class PetDb {
             Scanner fileScan = new Scanner(file);
             // Read each line in the file
             while (fileScan.hasNextLine()) {
+                // Checks if the pet limit has been reached
                 if (petList.size() < 5) {
                     // Splits the line into pet name and pet age using the "|" delimiter
                     String[] line = fileScan.nextLine().split("\\|");
@@ -72,6 +73,7 @@ public class PetDb {
                     // Adds the Pet object to the petList
                     petList.add(newPet);
                 } else {
+                    // Case for loading a file with too many pets (will still load the first 5)
                     System.out.println("\nERROR: Too many pets in " + fileName);
                     System.out.println("\nMaximum number of pets must not exceed 5\n");
                     break;
