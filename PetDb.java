@@ -21,24 +21,30 @@ public class PetDb {
         System.out.println("Input pet name as 'done' at any time to stop");
         // Loops, adding pets
         while (true) {
-            System.out.print("Add pet (name age): ");
-            // Take a user input string as a string array and splits at a space
-            String[] input = scan.nextLine().split(" ");
-            // if done is input, breaks out of the switch and loops back into menu
-            if (input[0].equalsIgnoreCase("done")) {
-                System.out.println("Pets added.");
-                break;
-            } else {
-                try {
-                    // takes the string at index 0 as the name
-                    String name = input[0];
-                    // takes the string at index 1 and parses to an int
-                    int age = Integer.parseInt(input[1]);
-                    // pass name and age to pet constructor
-                    petList.add(new Pet(name, age));
-                } catch (Exception e) {
-                    System.out.println("ERROR: Invalid input");
+            // If the pet list reaches 5 elements, notifies user max has been reached and exits loop and method
+            if (petList.size() < 5) {
+                System.out.print("Add pet (name age): ");
+                // Take a user input string as a string array and splits at a space
+                String[] input = scan.nextLine().split(" ");
+                // if done is input, breaks out of the switch and loops back into menu
+                if (input[0].equalsIgnoreCase("done")) {
+                    System.out.println("Pets added.");
+                    break;
+                } else {
+                    try {
+                        // takes the string at index 0 as the name
+                        String name = input[0];
+                        // takes the string at index 1 and parses to an int
+                        int age = Integer.parseInt(input[1]);
+                        // pass name and age to pet constructor
+                        petList.add(new Pet(name, age));
+                    } catch (Exception e) {
+                        System.out.println("ERROR: Invalid input");
+                    }
                 }
+            } else {
+                System.out.println("\nMaximum number of pets (5) has been reached\n");
+                break;
             }
         }
     }
@@ -66,8 +72,8 @@ public class PetDb {
                     // Adds the Pet object to the petList
                     petList.add(newPet);
                 } else {
-                    System.out.println("ERROR: Too many pets in " + fileName);
-                    System.out.println("Maximum number of pets must not exceed 5");
+                    System.out.println("\nERROR: Too many pets in " + fileName);
+                    System.out.println("\nMaximum number of pets must not exceed 5\n");
                     break;
                 }
             }
@@ -187,19 +193,18 @@ public class PetDb {
         } catch (InputMismatchException e) {
             System.out.println("ERROR: Invalid pet ID inpu. Must input an integer");
         }
-            scan.nextLine();
-            if (id >= 0 && id < petList.size()) {
-                Pet pet = petList.get(id);
-                System.out.println(id + " " + pet.getName() + " " + pet.getAge() + " has been removed.");
-                petList.remove(id);
-            } else if (id == 6) {
-                petList.clear();
-                System.out.println("\nAll pets removed!\n");
-            } else {
-                System.out.println("Invalid pet ID");
-            }
+        scan.nextLine();
+        if (id >= 0 && id < petList.size()) {
+            Pet pet = petList.get(id);
+            System.out.println(id + " " + pet.getName() + " " + pet.getAge() + " has been removed.");
+            petList.remove(id);
+        } else if (id == 6) {
+            petList.clear();
+            System.out.println("\nAll pets removed!\n");
+        } else {
+            System.out.println("Invalid pet ID");
         }
-    
+    }
 
     // MAIN
     public static void main(String[] args) {
