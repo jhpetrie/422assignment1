@@ -1,0 +1,4 @@
+Bobo|12
+kiki|1
+Princess|19
+Scout|3

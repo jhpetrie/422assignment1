@@ -236,7 +236,7 @@ public class PetDb {
                     break;
                 case 7: // Save pet list to a text file
                     System.out.println("Input desired file name");
-                    saveFile("test", petList);
+                    saveFile(scan.nextLine() + ".txt", petList);
                     break;
                 case 8: // Load pets from a file
                     if (petList.isEmpty()) {
