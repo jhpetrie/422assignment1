@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 //pet database class of type arraylist
 public class PetDb {
     private static ArrayList<Pet> petList;
+    static Scanner scan = new Scanner(System.in);
 
     // constructor
     public PetDb() {
@@ -15,8 +16,26 @@ public class PetDb {
     }
 
     // add pet to arraylist
-    public void addPet(String name, int age) {
-        petList.add(new Pet(name, age));
+    public void addPet() {
+        System.out.println("Input pet name as 'done' at any time to stop");
+        // Loops, adding pets
+        while (true) {
+            System.out.print("Add pet (name age): ");
+            // Take a user input string as a string array and splits at a space
+            String[] input = scan.nextLine().split(" ");
+            // if done is input, breaks out of the switch and loops back into menu
+            if (input[0].equalsIgnoreCase("done")) {
+                System.out.println("Pets added.");
+                break;
+            } else {
+                // takes the string at index 0 as the name
+                String name = input[0];
+                // takes the string at index 1 and parses to an int
+                int age = Integer.parseInt(input[1]);
+                // pass name and age to pet constructor
+                petList.add(new Pet(name, age));
+            }
+        }
     }
 
     public static void printHeader() {
@@ -35,12 +54,12 @@ public class PetDb {
             // Read each line in the file
             while (fileScan.hasNextLine()) {
                 if (petList.size() < 5) {
-                // Splits the line into pet name and pet age using the "|" delimiter
-                String[] line = fileScan.nextLine().split("\\|");
-                // Creates a new Pet object with its pet name and pet age
-                Pet newPet = new Pet(line[0], Integer.parseInt(line[1]));
-                // Adds the Pet object to the petList
-                petList.add(newPet);
+                    // Splits the line into pet name and pet age using the "|" delimiter
+                    String[] line = fileScan.nextLine().split("\\|");
+                    // Creates a new Pet object with its pet name and pet age
+                    Pet newPet = new Pet(line[0], Integer.parseInt(line[1]));
+                    // Adds the Pet object to the petList
+                    petList.add(newPet);
                 } else {
                     System.out.println("ERROR: Too many pets in " + fileName);
                     System.out.println("Maximum number of pets must not exceed 5");
@@ -160,7 +179,6 @@ public class PetDb {
     // MAIN
     public static void main(String[] args) {
         PetDb petDb = new PetDb();
-        Scanner scan = new Scanner(System.in);
         System.out.println("Pet Database Program\n");
         // Menu that will loop until the program is exited
         while (true) {
@@ -183,25 +201,7 @@ public class PetDb {
                     petDb.viewPets();
                     break;
                 case 2: // Add pets
-                    System.out.println("Input pet name as 'done' at any time to stop");
-                    // Loops, adding pets
-                    while (true) {
-                        System.out.print("Add pet (name age): ");
-                        // Take a user input string as a string array and splits at a space
-                        String[] input = scan.nextLine().split(" ");
-                        // if done is input, breaks out of the switch and loops back into menu
-                        if (input[0].equalsIgnoreCase("done")) {
-                            System.out.println("Pets added.");
-                            break;
-                        } else {
-                            // takes the string at index 0 as the name
-                            String name = input[0];
-                            // takes the string at index 1 and parses to an int
-                            int age = Integer.parseInt(input[1]);
-                            // pass name and age to pet constructor
-                            petDb.addPet(name, age);
-                        }
-                    }
+                    petDb.addPet();
                     break;
                 case 3: // update pet
                     // first prints the petdb
