@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.FileNotFoundException;
 
 //pet database class of type arraylist
@@ -39,12 +41,33 @@ public class PetDb {
                 // Adds the Pet object to the petList
                 petList.add(newPet);
             }
+            System.out.println("\n" + fileName + " loaded succesfully\n");
             // Closes the file scanner
             fileScan.close();
 
         } catch (FileNotFoundException e) {
-            System.out.println("ERROR: " + fileName + " does not exist or is named something else.");
+            System.out.println("\nERROR: " + fileName + " does not exist or is named something else.\n");
         }
+    }
+
+    // Method for saving to a file
+    public static void saveFile(String fileName, ArrayList<Pet> list) {
+        try {
+            // File writer wrapped in bufferedwriter
+            BufferedWriter bw = new BufferedWriter(new FileWriter(fileName));
+
+            // Loops over the array list, writing name + | + age of each pet
+            for (int i = 0; i < list.size(); i++) {
+                bw.write(list.get(i).getName() + "|" + list.get(i).getAge());
+                bw.newLine();
+            }
+            System.out.println("Succesfully saved to " + fileName);
+            // Close bufferedwriter
+            bw.close();
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+
     }
 
     // method to view pets
@@ -83,7 +106,7 @@ public class PetDb {
         System.out.println(rows + " rows in set.");
     }
 
-    // method for searching by age, same as by name but with an int parameter
+    // Method for searching by age, same as by name but with an int parameter
     public static void searchAge(int searchAge) {
         printHeader();
         int rows = 0;
@@ -113,18 +136,17 @@ public class PetDb {
         }
     }
 
-    // remove pet
+    // Remove pet
     public static void removePet(int id) {
-        // if the passed id is valid gets pet, removes pet and prints the removed info
+        // If the passed id is valid gets pet, removes pet and prints the removed info
         if (id >= 0 && id < petList.size()) {
             Pet pet = petList.get(id);
             System.out.println(id + " " + pet.getName() + " " + pet.getAge() + " has been removed.");
             petList.remove(id);
-        } else if (id == 6){
+        } else if (id == 6) {
             petList.clear();
             System.out.println("\nAll pets removed!\n");
-        }
-         else {
+        } else {
             System.out.println("Invalid pet ID");
         }
     }
@@ -134,7 +156,7 @@ public class PetDb {
         PetDb petDb = new PetDb();
         Scanner scan = new Scanner(System.in);
         System.out.println("Pet Database Program\n");
-        // menu that will loop until the program is exited
+        // Menu that will loop until the program is exited
         while (true) {
             System.out.println("What would you like to do?");
             System.out.println("1. View all pets");
@@ -151,12 +173,10 @@ public class PetDb {
             scan.nextLine();
             // logic based on user input
             switch (option) {
-                // View Pets
-                case 1:
+                case 1: // View Pets
                     petDb.viewPets();
                     break;
-                // Add pets
-                case 2:
+                case 2: // Add pets
                     System.out.println("Input pet name as 'done' at any time to stop");
                     // Loops, adding pets
                     while (true) {
@@ -177,8 +197,7 @@ public class PetDb {
                         }
                     }
                     break;
-                // update pet
-                case 3:
+                case 3: // update pet
                     // first prints the petdb
                     petDb.viewPets();
                     // asks for id to update
@@ -194,8 +213,7 @@ public class PetDb {
                     // pass name and age to pet updater
                     petDb.updatePet(petId, name, age);
                     break;
-                // remove pet
-                case 4:
+                case 4: // remove pet
                     // first prints pet db
                     petDb.viewPets();
                     // gets the desired id to remove
@@ -205,36 +223,34 @@ public class PetDb {
                     // passes id to removepet method
                     removePet(id);
                     break;
-                // name search
-                case 5:
+                case 5: // name search
                     System.out.print("Enter a name to search: ");
                     String searchName = scan.nextLine();
                     searchName(searchName);
                     break;
-                // age search
-                case 6:
+                case 6: // age search
                     System.out.print("Enter age to search: ");
                     int searchAge = scan.nextInt();
                     scan.nextLine();
                     searchAge(searchAge);
                     break;
-                // Save current Pet Database
-                case 7:
-                    // Load pets from a file
-                case 8:
+                case 7: // Save pet list to a text file
+                    System.out.println("Input desired file name");
+                    saveFile("test", petList);
+                    break;
+                case 8: // Load pets from a file
                     if (petList.isEmpty()) {
                         while (petList.isEmpty()) {
                             System.out
-                                    .println("Input the name of the txt file you would like to load (include .txt): ");
-                            String fileName = scan.nextLine();
+                                    .println("Input the name of the txt file you would like to load: ");
+                            String fileName = scan.nextLine() + ".txt";
                             loadFile(fileName);
                         }
                     } else {
                         System.out.println("\nA pet database is already present!\n");
                     }
                     break;
-                // exit the program
-                case 9:
+                case 9: // View Pets
                     System.out.println("Goodbye!");
                     scan.close();
                     System.exit(0);
