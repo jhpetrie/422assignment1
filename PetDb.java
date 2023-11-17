@@ -34,12 +34,18 @@ public class PetDb {
             Scanner fileScan = new Scanner(file);
             // Read each line in the file
             while (fileScan.hasNextLine()) {
+                if (petList.size() < 5) {
                 // Splits the line into pet name and pet age using the "|" delimiter
                 String[] line = fileScan.nextLine().split("\\|");
                 // Creates a new Pet object with its pet name and pet age
                 Pet newPet = new Pet(line[0], Integer.parseInt(line[1]));
                 // Adds the Pet object to the petList
                 petList.add(newPet);
+                } else {
+                    System.out.println("ERROR: Too many pets in " + fileName);
+                    System.out.println("Maximum number of pets must not exceed 5");
+                    break;
+                }
             }
             System.out.println("\n" + fileName + " loaded succesfully\n");
             // Closes the file scanner
