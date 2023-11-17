@@ -11,6 +11,13 @@ public class PetDb {
     private static ArrayList<Pet> petList;
     static Scanner scan = new Scanner(System.in);
 
+    // Method to check the range of input ages and throws custom exception if out of range
+    static void checkRange(int age) throws OutOfRangeException {
+        if (age < 1 || age > 20) {
+            throw new OutOfRangeException();
+        }
+    }
+
     // constructor
     public PetDb() {
         petList = new ArrayList<>();
@@ -21,7 +28,8 @@ public class PetDb {
         System.out.println("Input pet name as 'done' at any time to stop");
         // Loops, adding pets
         while (true) {
-            // If the pet list reaches 5 elements, notifies user max has been reached and exits loop and method
+            // If the pet list reaches 5 elements, notifies user max has been reached and
+            // exits loop and method
             if (petList.size() < 5) {
                 System.out.print("Add pet (name age): ");
                 // Take a user input string as a string array and splits at a space
@@ -36,10 +44,13 @@ public class PetDb {
                         String name = input[0];
                         // takes the string at index 1 and parses to an int
                         int age = Integer.parseInt(input[1]);
+                        // checks the age to ensure it's within 1-20 throws custom exception if not
+                        checkRange(age);
                         // pass name and age to pet constructor
                         petList.add(new Pet(name, age));
                     } catch (Exception e) {
                         System.out.println("ERROR: Invalid input");
+                        System.out.println(e.getMessage());
                     }
                 }
             } else {
@@ -162,8 +173,13 @@ public class PetDb {
     // Update Pet
     public void updatePet() {
         while (true) {
+            int petId = 6;
             System.out.print("Enter the pet ID to update: ");
-            int petId = scan.nextInt();
+            try {
+                petId = scan.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("ERROR: Invalid pet ID. Must input an integer");
+            }
             scan.nextLine();
             // checks to ensure input ID to edit is valid (more than 0 less than max)
             if (petId >= 0 && petId < petList.size()) {
@@ -171,15 +187,23 @@ public class PetDb {
                 System.out.print("\nEnter new name and new age: ");
                 String[] input = scan.nextLine().split(" ");
                 // reuses pet adding logic to update pet
-                String newName = input[0];
-                int newAge = Integer.parseInt(input[1]);
-                // gets the pet at that index (id)
-                Pet pet = petList.get(petId);
-                // prints required message and sets name and age based on passed parameters
-                System.out.println(pet.getName() + " " + pet.getAge() + " changed to " + newName + " " + newAge);
-                pet.setName(newName);
-                pet.setAge(newAge);
-                break;
+                try {
+                    String newName = input[0];
+                    int newAge = Integer.parseInt(input[1]);
+                    checkRange(newAge);
+                    // gets the pet at that index (id)
+                    Pet pet = petList.get(petId);
+                    // prints required message and sets name and age based on passed parameters
+                    System.out.println(pet.getName() + " " + pet.getAge() + " changed to " + newName + " " + newAge);
+                    pet.setName(newName);
+                    pet.setAge(newAge);
+                    break;
+                } catch (Exception e) {
+                    // Catches improper name and age format then loops back to the beginning of
+                    // updatePet because no break
+                    System.out.println("\nERROR: Invalid pet name and age format");
+                    System.out.println(e.getMessage());
+                }
             } else {
                 System.out.println("\nERROR: Invalid pet ID\n");
             }
@@ -193,7 +217,7 @@ public class PetDb {
         try {
             id = scan.nextInt();
         } catch (InputMismatchException e) {
-            System.out.println("ERROR: Invalid pet ID inpu. Must input an integer");
+            System.out.println("ERROR: Invalid pet ID. Must input an integer");
         }
         scan.nextLine();
         if (id >= 0 && id < petList.size()) {
